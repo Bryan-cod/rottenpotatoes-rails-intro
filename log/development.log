@@ -758,3 +758,66 @@ ActionView::Template::Error (undefined method `each' for nil:NilClass):
   Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.7ms)
   Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
   Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (18.8ms)
+
+
+Started GET "/" for 2601:643:8680:9790::8cb at 2022-10-04 01:42:55 +0000
+Cannot render console from 2601:643:8680:9790::8cb! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+
+SyntaxError (/home/codio/workspace/rottenpotatoes-rails-intro/app/controllers/movies_controller.rb:51: syntax error, unexpected end-of-input, expecting end):
+  app/controllers/movies_controller.rb:51: syntax error, unexpected end-of-input, expecting end
+
+
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_source.erb (4.6ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.7ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.4ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (18.0ms)
+
+
+Started GET "/" for 2601:643:8680:9790::8cb at 2022-10-04 01:43:02 +0000
+Cannot render console from 2601:643:8680:9790::8cb! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MoviesController#index as HTML
+  Rendered movies/index.html.erb within layouts/application (1.9ms)
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.0ms)
+
+ActionView::Template::Error (undefined method `each' for nil:NilClass):
+    13:     </tr>
+    14:   </thead>
+    15:   <tbody>
+    16:     <% @movies.each do |movie| %>
+    17:       <tr>
+    18:         <td>
+    19:           <%= movie.title %>
+  app/views/movies/index.html.erb:16:in `_app_views_movies_index_html_erb__1228033247758724440_69826850926560'
+
+
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_source.erb (8.8ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (4.0ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.0ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (27.0ms)
+
+
+Started GET "/" for 2601:643:8680:9790::8cb at 2022-10-04 01:44:14 +0000
+Cannot render console from 2601:643:8680:9790::8cb! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by MoviesController#index as HTML
+  [1m[35mMovie Load (1.8ms)[0m  SELECT "movies".* FROM "movies"
+  Rendered movies/index.html.erb within layouts/application (32.1ms)
+Completed 500 Internal Server Error in 39ms (ActiveRecord: 2.2ms)
+
+ActionView::Template::Error (undefined method `include?' for nil:NilClass):
+    38:   <% @all_ratings.each do |rating| %>
+    39:     <div class="form-check  form-check-inline">
+    40:       <%= label_tag "ratings[#{rating}]", rating, class: 'form-check-label' %>
+    41:       <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show.include?(rating), class: 'form-check-input' %>
+    42:     </div>
+    43:   <% end %>
+    44:   <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
+  app/views/movies/index.html.erb:41:in `block (2 levels) in _app_views_movies_index_html_erb__1228033247758724440_69826850926560'
+  app/views/movies/index.html.erb:38:in `each'
+  app/views/movies/index.html.erb:38:in `block in _app_views_movies_index_html_erb__1228033247758724440_69826850926560'
+  app/views/movies/index.html.erb:36:in `_app_views_movies_index_html_erb__1228033247758724440_69826850926560'
+
+
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_source.erb (6.3ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.0ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.5ms)
+  Rendered /home/codio/.rvm/gems/ruby-2.6.6/gems/actionpack-4.2.11/lib/action_dispatch/middleware/templates/rescues/template_error.html.erb within rescues/layout (19.1ms)

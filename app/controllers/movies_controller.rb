@@ -9,6 +9,7 @@ class MoviesController < ApplicationController
   
     def index
       @movies = Movie.all
+      @all_ratings = ['G','PG','PG-13','R']
     end
   
     def new
@@ -17,7 +18,6 @@ class MoviesController < ApplicationController
   
     def create
       @movie = Movie.create!(movie_params)
-      @all_ratings = ['G','PG','PG-13','R']
       flash[:notice] = "#{@movie.title} was successfully created."
       redirect_to movies_path
     end

@@ -13,7 +13,20 @@ class MoviesController < ApplicationController
       @ratings_to_show = @all_ratings
       if (params[:ratings])
         @ratings_to_show = params[:ratings].keys
+
         @movies = Movie.with_ratings(@ratings_to_show)
+      end
+
+      if (params[:title_ordered])
+        @ratings_to_show = params[:title_ordered].keys
+
+        @movies = Movie.with_ratings(@ratings_to_show).order(:title)
+      end
+
+      if (params[:date_ordered])
+        @ratings_to_show = params[:date_ordered].keys
+
+        @movies = Movie.with_ratings(@ratings_to_show).order(:release_date)
       end
     end
   

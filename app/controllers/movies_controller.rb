@@ -1,7 +1,6 @@
 class MoviesController < ApplicationController
 
-    @all_ratings = ['G','PG','PG-13','R']
-    
+
     def show
       id = params[:id] # retrieve movie ID from URI route
       @movie = Movie.find(id) # look up movie by unique ID
@@ -47,4 +46,5 @@ class MoviesController < ApplicationController
       params.require(:movie).permit(:title, :rating, :description, :release_date)
     end
 
+    def self.all_ratings ; %w[G PG PG-13 R NC-17] ; end
   end

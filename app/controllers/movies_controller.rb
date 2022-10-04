@@ -44,4 +44,11 @@ class MoviesController < ApplicationController
     def movie_params
       params.require(:movie).permit(:title, :rating, :description, :release_date)
     end
+
+    def all_ratings
+      res = ['G','PG','PG-13','R']
+    end
+
+    def ratings_to_show
+    end
   end

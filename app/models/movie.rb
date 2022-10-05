@@ -7,7 +7,7 @@ class Movie < ActiveRecord::Base
         if (ratings_list == [])
             return @all_ratings
         else
-            Movie.where('rating IN (?)', ratings_list)
+            return Movie.where('rating IN (?)', ratings_list)
         end
     end
 

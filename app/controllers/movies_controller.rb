@@ -8,26 +8,49 @@ class MoviesController < ApplicationController
     end
   
     def index
-      @movies = Movie.all
-      @all_ratings = ['G','PG','PG-13','R']
-      @ratings_to_show = @all_ratings
-      if (params[:ratings])
-        @ratings_to_show = params[:ratings].keys
+        @all_ratings = ['G','PG','PG-13','R']
+        @ratings_to_show = @all_ratings
+        @movies = Movie.all
+        @title_ordered = false
+        @date_ordered = false
+        @if_date_chosen = "hilite bg-transparent"
+        @if_title_chosen = "hilite bg-transparent"
+        if (params[:ratings] || params[:ratings] == [])
+            @ratings_to_show = params[:ratings].keys
+            @movies = Movie.with_ratings(@ratings_to_show)
+            session[:ratings_to_show] = @ratings_to_show
+        end
+        if (params[:title_ordered])
+            @title_ordered = true
+            @ratings_to_show = params[:title_ordered].keys
+            session[:ratings_to_show] = @ratings_to_show
+            session[:is_ordered_by_title] = @title_ordered
+            session[:is_ordered_by_date] = false
+            @movies = Movie.order(:title).with_ratings(@ratings_to_show)
+            @if_title_chosen = "hilite bg-warning"
 
-        @movies = Movie.with_ratings(@ratings_to_show)
-      end
+        elsif (params[:date_ordered])
+            @date_ordered = true
+            @ratings_to_show = params[:date_ordered].keys
+            session[:ratings_to_show] = @ratings_to_show
+            session[:is_ordered_by_date] = @date_ordered
+            session[:is_ordered_by_title] = false
+            @movies = Movie.order(:release_date).with_ratings(@ratings_to_show)
+            @if_date_chosen = "hilite bg-warning"
 
-      if (params[:title_ordered])
-        @ratings_to_show = params[:title_ordered].keys
-
-        @movies = Movie.with_ratings(@ratings_to_show).order(:title)
-      end
-
-      if (params[:date_ordered])
-        @ratings_to_show = params[:date_ordered].keys
-
-        @movies = Movie.with_ratings(@ratings_to_show).order(:release_date)
-      end
+        end
+        if (!(params[:ratings]) && !(params[:title_ordered]) && !(params[:date_ordered]))
+            @ratings_to_show = session[:ratings_to_show]
+            @title_ordered = session[:is_ordered_by_title]
+            @date_ordered = session[:is_ordered_by_date]
+            if (@title_ordered)
+                @movies = Movie.order(:title).with_ratings(@ratings_to_show)
+            elsif (@date_ordered)
+                @movies = Movie.order(:release_date).with_ratings(@ratings_to_show)
+            else
+                @movies = Movie.with_ratings(@ratings_to_show) 
+            end
+        end
     end
   
     def new

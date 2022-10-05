@@ -8,18 +8,25 @@ class MoviesController < ApplicationController
     end
   
     def index
+        puts params
         @all_ratings = ['G','PG','PG-13','R']
-        @ratings_to_show = @all_ratings
-        @movies = Movie.all
         @title_ordered = false
         @date_ordered = false
+        @ratings_to_show = @all_ratings
+        session[:ratings_to_show] = @ratings_to_show
+        session[:is_ordered_by_date] = @date_ordered
+        session[:is_ordered_by_title] = @title_ordered
         @if_date_chosen = "hilite bg-transparent"
         @if_title_chosen = "hilite bg-transparent"
-        if (params[:ratings] || params[:ratings] == [])
+        session[:home] = false
+        # Changed some ratings selection but not all are unchecked
+        if (params[:ratings])
             @ratings_to_show = params[:ratings].keys
             @movies = Movie.with_ratings(@ratings_to_show)
             session[:ratings_to_show] = @ratings_to_show
+            session[:home] = true
         end
+        # Clicked to sort by title
         if (params[:title_ordered])
             @title_ordered = true
             @ratings_to_show = params[:title_ordered].keys
@@ -28,7 +35,9 @@ class MoviesController < ApplicationController
             session[:is_ordered_by_date] = false
             @movies = Movie.order(:title).with_ratings(@ratings_to_show)
             @if_title_chosen = "hilite bg-warning"
+            session[:home] = true
 
+        # Clicked to sort by date
         elsif (params[:date_ordered])
             @date_ordered = true
             @ratings_to_show = params[:date_ordered].keys
@@ -37,9 +46,10 @@ class MoviesController < ApplicationController
             session[:is_ordered_by_title] = false
             @movies = Movie.order(:release_date).with_ratings(@ratings_to_show)
             @if_date_chosen = "hilite bg-warning"
+            session[:home] = true
 
-        end
-        if (!(params[:ratings]) && !(params[:title_ordered]) && !(params[:date_ordered]))
+        # Return back to home page
+        elsif (params[:id] && (!(params[:ratings]) && !(params[:title_ordered]) && !(params[:date_ordered])))
             @ratings_to_show = session[:ratings_to_show]
             @title_ordered = session[:is_ordered_by_title]
             @date_ordered = session[:is_ordered_by_date]
